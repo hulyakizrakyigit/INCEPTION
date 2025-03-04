@@ -1,39 +1,23 @@
-# Bu dosyanın sürümü
-version: '3'
+version: '3.8'
 
-# Hizmetlerin(Konteyner) ayarları
 services:
   nginx:
-      # Oluşturulacak Konteyner Adı
       container_name: nginx
-      image: nginx:1.0.0
-
-      # Dockerfile dosya yolu
+      # image: nginx:1.0.0
       build: ./requirements/nginx
-
-      # Konteyneri başlatmadan önce bağlı olduğu konteynerleri belirtir.
-  # # Eğer bonus kısmını yapmayacaksanız bu kısmı yazmayın.
       depends_on:
         - wordpress
-
-      # Dinlenilecek : Yönlendirilecek portlar
       ports:
         - 443:443
-
-      # Dosyaların saklanacak dizini
       volumes:
         - wordpress_data:/var/www/html
-
-      # Konteynerin otomatik olarak yeniden başlat
       restart: always
-
-      # Konteynerin bağlı olduğu ağ
       networks:
         - network
 
   mariadb:
     container_name: mariadb
-    image: mariadb:1.0.0
+    # image: mariadb:1.0.0
     build: ./requirements/mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -48,7 +32,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress:1.0.0
+    # image: wordpress:1.0.0
     depends_on:
       - mariadb
     build:
@@ -67,7 +51,6 @@ services:
       - user_credentials
 
       
-# Hizmet verilerini saklar ve ana sistem ile bağlantı kurar.
 volumes:
   mariadb_data:
     driver: local
@@ -82,7 +65,6 @@ volumes:
       device: /home/hkizrak-/data/wordpress
       o: bind
       
-# Varsayılan ağ sürücüsüne bağlanır
 networks:
   network:
     driver: bridge
