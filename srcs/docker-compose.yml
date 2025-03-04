@@ -35,9 +35,7 @@ services:
     # image: wordpress:1.0.0
     depends_on:
       - mariadb
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
+    build: ./requirements/wordpress
     restart: always
     env_file:
       - .env
