@@ -5,7 +5,6 @@ then
     echo "Wordpress already downloaded"
 else
 
-######## MANDATORY ########
 
 	WP_PWD=$(cat /run/secrets/user_credentials)
 	WP_ADMIN_PWD=$(cat /run/secrets/credentials)
@@ -24,25 +23,15 @@ else
     cp wp-config-sample.php wp-config.php
 
     wp core download --allow-root
-    wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --allow-root
+    wp core install --url=hkizrak-.42.fr --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --allow-root
     wp user create $WP_USR $WP_EMAIL --allow-root --role=author --user_pass=$WP_PWD
 
     wp theme install twentytwentyfour --activate --allow-root
 
-    # Yorum yapma özelliğini etkinleştir
     wp option update default_comment_status open --allow-root
     wp option update comment_moderation 1 --allow-root
     wp option update comment_whitelist 1 --allow-root
 
-# ######## BONUS ########
-# ## Redis Çerez Ayarları ##
-# 	wp config set WP_REDIS_HOST redis --allow-root
-#   	wp config set WP_REDIS_PORT 6379 --raw --allow-root
-#  	wp config set WP_CACHE_KEY_SALT $DOMAIN_NAME --allow-root
-#  	wp config set WP_REDIS_CLIENT phpredis --allow-root
-# 	wp plugin install redis-cache --activate --allow-root
-#         wp plugin update --all --allow-root
-# 	wp redis enable --allow-root
 fi
 
 exec "$@"

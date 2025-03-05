@@ -11,8 +11,6 @@ RUN apt-get update && apt-get -y install \
 	php-pdo \
 	php-gd php-cli \
 	php-mbstring \
-	# redis \
-	# php-redis \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
